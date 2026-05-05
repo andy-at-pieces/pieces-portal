@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
+  --font-dm-mono: 'DM Mono', ui-monospace, monospace;
+}
+
+html, body {
+  background: #ffffff;
+  color: #0a0b0c;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: #deff83;
+  color: #1c1d1e;
+}
+
+/* matches portal scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d0d4da;
+  border-radius: 100px;
+  border: 2px solid #ffffff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a4a6ab;
+}
