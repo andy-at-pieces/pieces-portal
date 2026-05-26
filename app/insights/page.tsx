@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import FutureFeatureOverlay from '@/components/FutureFeatureOverlay';
 import { PageHeader, SectionLabel } from '@/components/ui';
 import PulsePreviewCard from '@/components/insights/PulsePreviewCard';
 import TimeBreakdownSection from '@/components/insights/TimeBreakdownSection';
@@ -100,6 +101,7 @@ export default function InsightsPage() {
 
   return (
     <div className="max-w-[1240px] mx-auto px-8 py-8">
+      <FutureFeatureOverlay className="min-h-[480px]">
       <PageHeader
         kicker="Configuration"
         title="KPIs & North Stars"
@@ -282,6 +284,7 @@ export default function InsightsPage() {
       <TimeBreakdownSection role={timeBreakdownRole} kpiContext={kpiContext} />
 
       <TourTrigger />
+      </FutureFeatureOverlay>
     </div>
   );
 }

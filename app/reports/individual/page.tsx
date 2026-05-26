@@ -1,3 +1,4 @@
+import FutureFeatureOverlay from '@/components/FutureFeatureOverlay';
 import { Card, MetricCard, PageHeader, SectionLabel } from '@/components/ui';
 import SOPSection from '@/components/reports/SOPSection';
 import StandupCard from '@/components/StandupCard';
@@ -30,7 +31,9 @@ export default function IndividualReports() {
       <SectionLabel note="Set by Mack · Updated weekly">Your North Star KPIs</SectionLabel>
       <div className="grid grid-cols-4 gap-3">
         <MetricCard label="Focus Time / Day" value="6.4" unit="h" delta="↑ 0.8h vs last month" tone="pos" />
-        <MetricCard label="Fragmentation Index" value="0.31" delta="↓ 0.09 vs last month" tone="pos" />
+        <FutureFeatureOverlay>
+          <MetricCard label="Fragmentation Index" value="0.31" delta="↓ 0.09 vs last month" tone="pos" />
+        </FutureFeatureOverlay>
         <MetricCard label="Primary Project Share" value="58" unit="%" delta="↓ 4% vs last month" tone="warn" />
         <MetricCard
           label="AI Tool Utilization"

@@ -1,3 +1,4 @@
+import FutureFeatureOverlay from '@/components/FutureFeatureOverlay';
 import { Card, MetricCard, PageHeader, SectionLabel } from '@/components/ui';
 import AIUtilizationScoreCard from '@/components/reports/AIUtilizationScoreCard';
 import Heatmap from '@/components/Heatmap';
@@ -38,15 +39,19 @@ export default function ManagerReports() {
         />
       </div>
 
-      <OrgPulse />
+      <FutureFeatureOverlay>
+        <OrgPulse />
+      </FutureFeatureOverlay>
 
       {/* Signals */}
-      <SectionLabel note="3 signals this week">What&apos;s worth a conversation</SectionLabel>
-      <Card padding="none" className="overflow-hidden">
-        <div data-tour="manager-signals" className="px-5">
-          <SignalsList />
-        </div>
-      </Card>
+      <FutureFeatureOverlay>
+        <SectionLabel note="3 signals this week">What&apos;s worth a conversation</SectionLabel>
+        <Card padding="none" className="overflow-hidden">
+          <div data-tour="manager-signals" className="px-5">
+            <SignalsList />
+          </div>
+        </Card>
+      </FutureFeatureOverlay>
 
       {/* Heatmap */}
       <SectionLabel note="Aggregated contributions per project">
@@ -59,7 +64,7 @@ export default function ManagerReports() {
       {/* Team table */}
       <SectionLabel note="Click a name for the workflow view">Team, at a glance</SectionLabel>
       <Card padding="none" className="overflow-hidden">
-        <TeamTable />
+        <TeamTable futureFeatureKpiColumn />
       </Card>
     </div>
   );

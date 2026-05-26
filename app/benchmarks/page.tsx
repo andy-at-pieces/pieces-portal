@@ -1,3 +1,4 @@
+import FutureFeatureOverlay from '@/components/FutureFeatureOverlay';
 import WeekComparisonSection from '@/components/benchmarks/WeekComparisonSection';
 import { Card, PageHeader, SectionLabel } from '@/components/ui';
 import { BENCHMARK_METRIC_CARDS } from '@/lib/benchmarks/constants';
@@ -16,6 +17,7 @@ export default function BenchmarksPage() {
 
   return (
     <div className="max-w-[1240px] mx-auto px-8 py-8">
+      <FutureFeatureOverlay className="min-h-[480px]">
       <PageHeader
         kicker="Enterprise Benchmarking"
         title="Before & After"
@@ -157,6 +159,7 @@ export default function BenchmarksPage() {
       </div>
 
       <TourTrigger />
+      </FutureFeatureOverlay>
     </div>
   );
 }

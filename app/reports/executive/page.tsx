@@ -1,3 +1,4 @@
+import FutureFeatureOverlay from '@/components/FutureFeatureOverlay';
 import { Card, PageHeader, SectionLabel } from '@/components/ui';
 import ExecHero from '@/components/ExecHero';
 import DepartmentList from '@/components/DepartmentList';
@@ -34,7 +35,9 @@ export default function ExecutiveReports() {
       <div className="grid grid-cols-4 gap-3">
         <BigMetric label="Efficiency Index" value="+14" suffix="%" note="Focus time per working hour, company-wide, vs Q1." />
         <BigMetric label="AI Spend at Risk" value="$11.2" suffix="k/mo" note={<>Licensed AI tools with <strong className="text-ink-700 font-semibold">&lt;5% presence</strong> in employee output.</>} />
-        <BigMetric label="Context Savings" value="31" suffix="h" note="Reclaimed per employee per month from prior-work search." />
+        <FutureFeatureOverlay>
+          <BigMetric label="Context Savings" value="31" suffix="h" note="Reclaimed per employee per month from prior-work search." />
+        </FutureFeatureOverlay>
         <BigMetric label="Concentration Risk" value="2" note={<>Initiatives where <strong className="text-ink-700 font-semibold">&gt;70%</strong> of activity sits with one person.</>} />
       </div>
 

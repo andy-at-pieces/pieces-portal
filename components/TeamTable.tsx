@@ -36,15 +36,24 @@ const kpiBarTone: Record<string, string> = {
   capacity: 'bg-ink-300',
 };
 
-export default function TeamTable() {
+const KPI_COLUMN_INDEX = 3;
+
+export default function TeamTable({ futureFeatureKpiColumn = false }: { futureFeatureKpiColumn?: boolean }) {
+  const headers = ['Member', 'Primary Project', 'Focus / Day', 'KPI Progress', 'Signal'];
+
   return (
-    <table className="w-full">
+    <div className="relative">
+      <table className="w-full">
       <thead>
         <tr className="border-b border-surface-200">
-          {['Member', 'Primary Project', 'Focus / Day', 'KPI Progress', 'Signal'].map((h) => (
+          {headers.map((h, i) => (
             <th
               key={h}
-              className="text-left text-[10px] font-semibold tracking-[0.08em] text-ink-400 uppercase px-4 py-3"
+              className={`text-left text-[10px] font-semibold tracking-[0.08em] text-ink-400 uppercase px-4 py-3 ${
+                futureFeatureKpiColumn && i === KPI_COLUMN_INDEX
+                  ? 'opacity-60 pointer-events-none'
+                  : ''
+              }`}
             >
               {h}
             </th>
@@ -74,7 +83,11 @@ export default function TeamTable() {
             </td>
             <td className="px-4 py-3.5 text-sm text-ink-700">{row.project}</td>
             <td className="px-4 py-3.5 text-sm font-mono text-ink">{row.focus}</td>
-            <td className="px-4 py-3.5">
+            <td
+              className={`px-4 py-3.5 ${
+                futureFeatureKpiColumn ? 'opacity-60 pointer-events-none' : ''
+              }`}
+            >
               <div className="flex items-center gap-2">
                 <div className="w-[100px] h-1 bg-surface-100 rounded-full overflow-hidden">
                   <div
@@ -94,5 +107,13 @@ export default function TeamTable() {
         ))}
       </tbody>
     </table>
+      {futureFeatureKpiColumn && (
+        <div className="absolute top-10 right-4 z-10 pointer-events-none">
+          <span className="inline-flex items-center rounded-md border border-surface-300 bg-white px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-ink-500 shadow-sm">
+            v2: Coming Later
+          </span>
+        </div>
+      )}
+    </div>
   );
 }
