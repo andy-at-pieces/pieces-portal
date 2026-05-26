@@ -36,7 +36,7 @@ const kpiBarTone: Record<string, string> = {
   capacity: 'bg-ink-300',
 };
 
-const KPI_COLUMN_INDEX = 3;
+import FutureFeatureColumnOverlay from '@/components/FutureFeatureColumnOverlay';
 
 export default function TeamTable({ futureFeatureKpiColumn = false }: { futureFeatureKpiColumn?: boolean }) {
   const headers = ['Member', 'Primary Project', 'Focus / Day', 'KPI Progress', 'Signal'];
@@ -46,14 +46,10 @@ export default function TeamTable({ futureFeatureKpiColumn = false }: { futureFe
       <table className="w-full">
       <thead>
         <tr className="border-b border-surface-200">
-          {headers.map((h, i) => (
+          {headers.map((h) => (
             <th
               key={h}
-              className={`text-left text-[10px] font-semibold tracking-[0.08em] text-ink-400 uppercase px-4 py-3 ${
-                futureFeatureKpiColumn && i === KPI_COLUMN_INDEX
-                  ? 'opacity-60 pointer-events-none'
-                  : ''
-              }`}
+              className="text-left text-[10px] font-semibold tracking-[0.08em] text-ink-400 uppercase px-4 py-3"
             >
               {h}
             </th>
@@ -83,11 +79,7 @@ export default function TeamTable({ futureFeatureKpiColumn = false }: { futureFe
             </td>
             <td className="px-4 py-3.5 text-sm text-ink-700">{row.project}</td>
             <td className="px-4 py-3.5 text-sm font-mono text-ink">{row.focus}</td>
-            <td
-              className={`px-4 py-3.5 ${
-                futureFeatureKpiColumn ? 'opacity-60 pointer-events-none' : ''
-              }`}
-            >
+            <td className="px-4 py-3.5">
               <div className="flex items-center gap-2">
                 <div className="w-[100px] h-1 bg-surface-100 rounded-full overflow-hidden">
                   <div
@@ -108,11 +100,7 @@ export default function TeamTable({ futureFeatureKpiColumn = false }: { futureFe
       </tbody>
     </table>
       {futureFeatureKpiColumn && (
-        <div className="absolute top-10 right-4 z-10 pointer-events-none">
-          <span className="inline-flex items-center rounded-md border border-surface-300 bg-white px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-ink-500 shadow-sm">
-            v2: Coming Later
-          </span>
-        </div>
+        <FutureFeatureColumnOverlay className="left-[54%] w-[18%] min-w-[7.5rem]" />
       )}
     </div>
   );

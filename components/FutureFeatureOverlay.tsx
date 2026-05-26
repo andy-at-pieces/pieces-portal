@@ -1,4 +1,7 @@
+'use client';
+
 import { ReactNode } from 'react';
+import FutureFeatureBadge from '@/components/FutureFeatureBadge';
 
 type FutureFeatureOverlayProps = {
   children: ReactNode;
@@ -6,21 +9,25 @@ type FutureFeatureOverlayProps = {
   badgeClassName?: string;
 };
 
+/** Scrim darkens on hover / press so v2 regions read clearly against live UI. */
+const scrimClasses =
+  'absolute inset-0 z-[1] rounded-[inherit] bg-ink/[0.1] transition-colors duration-150 group-hover:bg-ink/30 group-active:bg-ink/45';
+
 export default function FutureFeatureOverlay({
   children,
   className = '',
   badgeClassName = '',
 }: FutureFeatureOverlayProps) {
   return (
-    <div className={`relative ${className}`}>
-      <div className="opacity-60 pointer-events-none select-none">{children}</div>
+    <div
+      className={`group relative rounded-lg ring-1 ring-ink/10 ring-inset transition-shadow duration-150 group-hover:ring-ink/25 group-active:ring-ink/35 ${className}`}
+    >
+      <div className="relative z-0 opacity-[0.78] pointer-events-none select-none">{children}</div>
+      <div className={scrimClasses} aria-hidden />
       <div
-        className={`absolute top-3 right-3 z-10 pointer-events-none ${badgeClassName}`}
-        aria-hidden
+        className={`absolute top-3 right-3 z-[2] pointer-events-none transition-transform duration-150 group-hover:scale-[1.02] ${badgeClassName}`}
       >
-        <span className="inline-flex items-center rounded-md border border-surface-300 bg-white px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-ink-500 shadow-sm">
-          v2: Coming Later
-        </span>
+        <FutureFeatureBadge />
       </div>
     </div>
   );

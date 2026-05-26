@@ -6,7 +6,7 @@ alwaysApply: false
 
 # FutureFeatureOverlay (v2 features)
 
-Use `components/FutureFeatureOverlay.tsx` for features deferred to v2. Do **not** hide UI—dim children (`opacity-60`, `pointer-events-none`) and show the floating badge **"v2: Coming Later"**.
+Use `components/FutureFeatureOverlay.tsx` for features deferred to v2. Do **not** hide UI—slightly dim children, add a scrim that **darkens on hover and press**, and show the dark pill badge **"Coming Soon"** (with small `v2` tag). Children stay `pointer-events-none`; the wrapper receives hover.
 
 ```tsx
 import FutureFeatureOverlay from '@/components/FutureFeatureOverlay';
