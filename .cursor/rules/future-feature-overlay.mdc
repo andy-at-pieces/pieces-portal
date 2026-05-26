@@ -1,0 +1,35 @@
+---
+description: Mark v2 / coming-later UI with FutureFeatureOverlay
+globs: app/**/*.tsx,components/**/*.tsx
+alwaysApply: false
+---
+
+# FutureFeatureOverlay (v2 features)
+
+Use `components/FutureFeatureOverlay.tsx` for features deferred to v2. Do **not** hide UI—dim children (`opacity-60`, `pointer-events-none`) and show the floating badge **"v2: Coming Later"**.
+
+```tsx
+import FutureFeatureOverlay from '@/components/FutureFeatureOverlay';
+
+<FutureFeatureOverlay>
+  {/* section to mark */}
+</FutureFeatureOverlay>
+```
+
+Optional: `className` on the wrapper (e.g. `min-h-[480px]` for full pages), `badgeClassName` for badge positioning on dark backgrounds.
+
+## Currently marked v2
+
+| Area | Target |
+|------|--------|
+| Individual | Fragmentation Index `MetricCard` |
+| Manager | `OrgPulse`; "What's worth a conversation" (label + card); Team table KPI Progress column (`TeamTable futureFeatureKpiColumn`) |
+| Executive | Context Savings `BigMetric` |
+| Insights | Entire page content |
+| Benchmarks | Entire page content |
+
+## Adding new v2 sections
+
+- Wrap with `FutureFeatureOverlay` unless only one table column needs marking—then use column-level dim + badge (see `TeamTable`).
+- Keep interactive v1 areas **outside** the overlay when only part of a page is v2.
+- Do not remove or restructure wrapped sections; overlay is additive only.
