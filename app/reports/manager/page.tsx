@@ -1,11 +1,17 @@
 import { Card, MetricCard, PageHeader, SectionLabel } from '@/components/ui';
+import AIUtilizationScoreCard from '@/components/reports/AIUtilizationScoreCard';
 import Heatmap from '@/components/Heatmap';
+import OrgPulse from '@/components/reports/OrgPulse';
 import SignalsList from '@/components/SignalsList';
 import TeamTable from '@/components/TeamTable';
+import { formatScore } from '@/lib/scores/aiUtilization';
+import { getManagerTeamAIUtilizationScore } from '@/lib/reports/aiUtilizationRollups';
 
 export const metadata = { title: 'Manager Reports · Pieces Enterprise' };
 
 export default function ManagerReports() {
+  const { teamAverage, aiTouchedOutputPct } = getManagerTeamAIUtilizationScore();
+
   return (
     <div data-tour-page="manager">
       <PageHeader
@@ -25,8 +31,15 @@ export default function ManagerReports() {
         <MetricCard label="Team Focus Avg" value="5.9" unit="h/day" delta="↑ 0.4h vs March" tone="pos" />
         <MetricCard label="Active Projects" value="7" delta="1 appears stalled" tone="warn" />
         <MetricCard label="New-hire Ramp" value="18" unit="days" delta="↓ 7 days vs Q1 avg" tone="pos" />
-        <MetricCard label="AI-Touched Output" value="48" unit="%" delta="↑ 14% vs March" tone="pos" />
+        <AIUtilizationScoreCard
+          total={teamAverage}
+          caption={`Team avg ${formatScore(teamAverage, { decimals: 1 })}.`}
+          secondaryLabel="AI-touched output"
+          secondaryValue={`${aiTouchedOutputPct}%`}
+        />
       </div>
+
+      <OrgPulse />
 
       {/* Signals */}
       <SectionLabel note="3 signals this week">What&apos;s worth a conversation</SectionLabel>

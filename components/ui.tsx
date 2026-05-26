@@ -8,7 +8,7 @@ export function PageHeader({
 }: {
   kicker?: string;
   title: ReactNode;
-  subtitle?: string;
+  subtitle?: ReactNode;
   meta?: ReactNode;
 }) {
   return (
@@ -77,12 +77,14 @@ export function MetricCard({
   value,
   unit,
   delta,
+  footnote,
   tone = 'neutral',
 }: {
   label: string;
   value: string;
   unit?: string;
   delta?: string;
+  footnote?: string;
   tone?: 'pos' | 'neg' | 'warn' | 'neutral';
 }) {
   const toneCls =
@@ -106,6 +108,9 @@ export function MetricCard({
       </div>
       {delta && (
         <div className={`text-[11px] font-mono mt-2 ${toneCls}`}>{delta}</div>
+      )}
+      {footnote && (
+        <div className="text-[10px] font-mono text-ink-400 mt-2 leading-snug">{footnote}</div>
       )}
     </Card>
   );

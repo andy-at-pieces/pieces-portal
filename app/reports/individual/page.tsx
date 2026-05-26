@@ -1,10 +1,13 @@
 import { Card, MetricCard, PageHeader, SectionLabel } from '@/components/ui';
 import StandupCard from '@/components/StandupCard';
 import TimeAllocation from '@/components/TimeAllocation';
+import { formatBreakdownCaption } from '@/lib/scores/aiUtilization';
+import { getIndividualAIUtilizationScore } from '@/lib/reports/aiUtilizationRollups';
 
 export const metadata = { title: 'Individual Reports · Pieces Enterprise' };
 
 export default function IndividualReports() {
+  const { score } = getIndividualAIUtilizationScore();
   return (
     <div data-tour-page="individual">
       <PageHeader
@@ -28,7 +31,14 @@ export default function IndividualReports() {
         <MetricCard label="Focus Time / Day" value="6.4" unit="h" delta="↑ 0.8h vs last month" tone="pos" />
         <MetricCard label="Fragmentation Index" value="0.31" delta="↓ 0.09 vs last month" tone="pos" />
         <MetricCard label="Primary Project Share" value="58" unit="%" delta="↓ 4% vs last month" tone="warn" />
-        <MetricCard label="AI Tool Utilization" value="42" unit="%" delta="↑ 11% vs last month" tone="pos" />
+        <MetricCard
+          label="AI Tool Utilization"
+          value="42"
+          unit="%"
+          delta="↑ 11% vs last month"
+          tone="pos"
+          footnote={`Score ${score.total}/10 · ${formatBreakdownCaption(score)}`}
+        />
       </div>
 
       <SectionLabel note="32 working days · 164h tracked via LTM-2.7">

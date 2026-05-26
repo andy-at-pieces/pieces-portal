@@ -1,58 +1,58 @@
-type Dept = {
-  name: string;
-  size: number;
-  focusPct: number;
-  fragTone: 'mild' | 'hot';
-  hours: string;
-  status: string;
-  statusTone: 'good' | 'warn' | 'bad';
-};
-
-const depts: Dept[] = [
-  { name: 'Engineering', size: 28, focusPct: 68, fragTone: 'mild', hours: '6.2h focus', status: 'Healthy', statusTone: 'good' },
-  { name: 'Go-to-Market', size: 34, focusPct: 58, fragTone: 'mild', hours: '5.3h focus', status: 'Healthy', statusTone: 'good' },
-  { name: 'Customer Success', size: 19, focusPct: 38, fragTone: 'hot', hours: '3.4h focus', status: 'Overloaded', statusTone: 'bad' },
-  { name: 'Product / Design', size: 12, focusPct: 72, fragTone: 'mild', hours: '6.8h focus', status: 'Healthy', statusTone: 'good' },
-  { name: 'Operations', size: 11, focusPct: 44, fragTone: 'mild', hours: '4.0h focus', status: 'Fragmented', statusTone: 'warn' },
-  { name: 'Finance / Admin', size: 8, focusPct: 61, fragTone: 'mild', hours: '5.6h focus', status: 'Healthy', statusTone: 'good' },
-];
+import {
+  buildDepartmentLensView,
+  resolveDepartmentType,
+} from '@/lib/lenses/departmentLens';
+import { EXECUTIVE_DEPARTMENTS } from '@/lib/reports/executiveDepartments';
+import { getDepartmentStatusTone } from '@/lib/reports/executiveBrief';
 
 const statusToneClasses = {
   good: 'text-accent-green',
   warn: 'text-accent-orange',
-  bad: 'text-accent-red',
+  overload: 'text-accent-orange',
 };
 
 export default function DepartmentList() {
+  const rows = EXECUTIVE_DEPARTMENTS.map((dept) => {
+    const type = resolveDepartmentType(dept.departmentType, { isInitiative: dept.isInitiative });
+    const lens = buildDepartmentLensView(type, dept.metrics);
+    const statusTone = getDepartmentStatusTone(lens.status);
+    return { dept, lens, statusTone };
+  });
+
   return (
     <div>
-      {depts.map((d, i) => (
+      {rows.map(({ dept, lens, statusTone }, i) => (
         <div
-          key={d.name}
+          key={dept.id}
           className={`grid grid-cols-[170px_1fr_110px] gap-5 items-center py-3.5 ${
-            i < depts.length - 1 ? 'border-b border-surface-200' : ''
+            i < rows.length - 1 ? 'border-b border-surface-200' : ''
           }`}
         >
           <div>
-            <div className="text-sm font-medium text-ink">{d.name}</div>
-            <div className="text-[10px] font-mono text-ink-400 mt-0.5">{d.size} people</div>
+            <div className="text-sm font-medium text-ink">{dept.name}</div>
+            <div className="text-[10px] font-mono text-ink-400 mt-0.5">{dept.size} people</div>
           </div>
-          <div className="relative h-2.5 bg-surface-100 rounded-full overflow-hidden">
-            <div
-              className="absolute top-0 bottom-0 left-0 bg-accent-green"
-              style={{ width: `${d.focusPct}%` }}
-            />
-            <div
-              className={`absolute top-0 bottom-0 ${
-                d.fragTone === 'hot' ? 'bg-accent-red' : 'bg-accent-orange'
-              }`}
-              style={{ left: `${d.focusPct}%`, width: `${100 - d.focusPct}%` }}
-            />
+          <div>
+            <div className="text-[10px] font-semibold tracking-[0.08em] text-ink-400 uppercase mb-1.5">
+              {lens.lensLabel}
+            </div>
+            <div className="relative h-2.5 bg-surface-100 rounded-full overflow-hidden">
+              <div
+                className="absolute top-0 bottom-0 left-0 bg-accent-green"
+                style={{ width: `${lens.metricA.value}%` }}
+              />
+              <div
+                className="absolute top-0 bottom-0 bg-accent-orange"
+                style={{ left: `${lens.metricA.value}%`, width: `${lens.metricB.value}%` }}
+              />
+            </div>
           </div>
           <div className="text-right">
-            <div className="text-xs font-mono text-ink">{d.hours}</div>
-            <div className={`text-[10px] font-medium uppercase tracking-wider mt-0.5 ${statusToneClasses[d.statusTone]}`}>
-              {d.status}
+            <div className="text-xs font-mono text-ink">{lens.summaryLine}</div>
+            <div
+              className={`text-[10px] font-medium uppercase tracking-wider mt-0.5 ${statusToneClasses[statusTone]}`}
+            >
+              {lens.statusLabel}
             </div>
           </div>
         </div>

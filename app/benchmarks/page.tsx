@@ -1,25 +1,31 @@
+import WeekComparisonSection from '@/components/benchmarks/WeekComparisonSection';
 import { Card, PageHeader, SectionLabel } from '@/components/ui';
+import { BENCHMARK_METRIC_CARDS } from '@/lib/benchmarks/constants';
+import { getBenchmarkNarrative } from '@/lib/benchmarks/summaryNarrative';
+import HelpsAnswerLine from '@/components/framing/HelpsAnswerLine';
+import { PAGE_PRIMARY_QUESTION } from '@/lib/framing/fiveQuestions';
+import { getContextResolutionSummary } from '@/lib/benchmarks/contextResolution';
 import { Lock, ShieldCheck } from 'lucide-react';
 import TourTrigger from '@/components/TourTrigger';
 
 export const metadata = { title: 'Benchmarks · Pieces Enterprise' };
 
-const benchmarks = [
-  { label: 'New-hire ramp time', value: '-38', suffix: '%', note: 'From 29 days to 18. New hires use shared Workstream Activity to get up to speed.' },
-  { label: 'Standup prep time', value: '-92', suffix: '%', note: 'From 11 min/day writing to 50 seconds reviewing auto-generated Standup Updates.' },
-  { label: 'Context remembered', value: '+64', suffix: '%', note: 'Self-reported recall of key decisions from calls 2+ weeks old, against a control group.' },
-  { label: 'Quarterly report effort', value: '-87', suffix: '%', note: 'The Disney pattern. Reports auto-drafted from Jira templates + LTM, reviewed in minutes.' },
-  { label: 'Underused AI spend identified', value: '$11', suffix: 'k/mo', note: 'Seats appearing in less than 5% of employee output across 12 weeks.' },
-  { label: 'Reported focus gain', value: '+14', suffix: '%', note: 'Sustained uninterrupted work time across the organization vs. baseline week.' },
-];
-
 export default function BenchmarksPage() {
+  const narrative = getBenchmarkNarrative();
+  const context = getContextResolutionSummary();
+
   return (
     <div className="max-w-[1240px] mx-auto px-8 py-8">
       <PageHeader
         kicker="Enterprise Benchmarking"
         title="Before & After"
-        subtitle="The quantifiable case for Pieces, built from pre/post surveys and real workflow data. For enterprise buyers, procurement conversations, and the champions defending renewal."
+        subtitle={
+          <>
+            What a consultant would deliver in a quarterly engagement — Pieces produces continuously,
+            from data your team is already generating.{' '}
+            <HelpsAnswerLine questionId={PAGE_PRIMARY_QUESTION.benchmarks} />
+          </>
+        }
         meta={
           <div>
             <div className="font-mono text-xs text-ink-400 uppercase tracking-wider">Tenant · pieces.app</div>
@@ -32,15 +38,16 @@ export default function BenchmarksPage() {
       <div data-tour="bench-hero" className="grid grid-cols-2 rounded-card border border-surface-200 overflow-hidden">
         <div className="p-9 bg-surface-50">
           <div className="text-[10px] font-semibold tracking-[0.1em] text-ink-400 uppercase mb-4">
-            Before · Week 0 baseline
+            Week 1 · first 7 days
           </div>
           <div className="flex items-baseline">
-            <span className="font-display font-bold text-[56px] text-ink leading-none tracking-tight">47</span>
-            <span className="text-sm text-ink-500 font-medium ml-2">min/day</span>
+            <span className="font-display font-bold text-[56px] text-ink leading-none tracking-tight">
+              {Math.round(context.week1AvgMinutes * 10) / 10}
+            </span>
+            <span className="text-sm text-ink-500 font-medium ml-2">min/query</span>
           </div>
           <div className="text-sm text-ink-500 mt-3 max-w-[340px] leading-relaxed">
-            Average time spent hunting for prior work, context, and &quot;what was I doing before that
-            meeting&quot;
+            Time from context query to opening a relevant file.
           </div>
         </div>
 
@@ -51,34 +58,75 @@ export default function BenchmarksPage() {
               After · Week 12
             </div>
             <div className="flex items-baseline">
-              <span className="font-display font-bold text-[56px] text-lime leading-none tracking-tight">9</span>
-              <span className="text-sm text-surface-300 font-medium ml-2">min/day</span>
+              <span className="font-display font-bold text-[56px] text-lime leading-none tracking-tight">
+                {Math.round(context.week12AvgMinutes * 10) / 10}
+              </span>
+              <span className="text-sm text-surface-300 font-medium ml-2">min/query</span>
             </div>
             <div className="text-sm text-surface-300 mt-3 max-w-[340px] leading-relaxed">
-              With Pieces surfacing prior context automatically.{' '}
-              <strong className="text-lime font-semibold">
-                -81% · reclaiming 31 hrs per employee per month.
-              </strong>
+              Week 12 reflects the most recent 7 days of OS-level workstream telemetry with Pieces.
             </div>
           </div>
+        </div>
+        <div className="col-span-2 border-t border-ink-700 px-9 py-5 bg-ink-900">
+          <div className="text-[10px] font-semibold tracking-[0.1em] text-lime/80 uppercase mb-2">
+            Auto-generated from organizational data
+          </div>
+          <blockquote className="font-display font-medium text-[15px] text-surface-200 leading-relaxed">
+            &ldquo;{narrative}&rdquo;
+          </blockquote>
         </div>
       </div>
 
       <SectionLabel note="Pre/post methodology · Per-person telemetry">
         Measured across the organization
       </SectionLabel>
-      <div className="grid grid-cols-3 gap-3">
-        {benchmarks.map((b) => (
-          <Card key={b.label} padding="lg">
-            <div className="text-[11px] font-medium text-ink-500 mb-3">{b.label}</div>
-            <div className="font-display font-bold text-[40px] text-ink leading-none tracking-tight">
-              {b.value}
-              <span className="text-lg text-ink-500 font-semibold ml-0.5">{b.suffix}</span>
-            </div>
-            <div className="text-xs text-ink-500 mt-3 leading-relaxed">{b.note}</div>
-          </Card>
-        ))}
+      <div className="grid grid-cols-2 gap-3">
+        {BENCHMARK_METRIC_CARDS.map((b, idx) =>
+          b.label ? (
+            <Card
+              key={b.label}
+              padding="lg"
+              className={
+                b.variant === 'customer-pattern'
+                  ? 'relative bg-surface-50/80 border-surface-200'
+                  : undefined
+              }
+            >
+              {b.variant === 'customer-pattern' && (
+                <span className="absolute top-4 right-4 text-[9px] font-semibold tracking-[0.08em] text-ink-400 uppercase">
+                  Customer pattern
+                </span>
+              )}
+              <div
+                className={`text-[11px] font-medium mb-3 ${
+                  b.variant === 'customer-pattern' ? 'text-ink-400' : 'text-ink-500'
+                }`}
+              >
+                {b.label}
+              </div>
+              <div
+                className={`font-display font-bold text-[40px] leading-none tracking-tight ${
+                  b.variant === 'customer-pattern' ? 'text-ink-700' : 'text-ink'
+                }`}
+              >
+                {b.value}
+                {b.suffix && (
+                  <span className="text-lg text-ink-500 font-semibold ml-0.5">{b.suffix}</span>
+                )}
+              </div>
+              <div className="text-xs text-ink-500 mt-3 leading-relaxed">{b.note}</div>
+              {b.secondaryNote && (
+                <div className="text-[11px] text-ink-400 mt-2 leading-snug">{b.secondaryNote}</div>
+              )}
+            </Card>
+          ) : (
+            <div key={`bench-metric-spacer-${idx}`} aria-hidden />
+          )
+        )}
       </div>
+
+      <WeekComparisonSection />
 
       <SectionLabel note="Why Pieces clears where Copilot sometimes doesn't">
         Security posture, for the deck

@@ -11,7 +11,13 @@ export default function ExecutiveReports() {
       <PageHeader
         kicker="Executive Reporting"
         title="The one page · April 2026"
-        subtitle="What a CEO needs to see this month. High-level by design. Pieces Inc · 142 employees."
+        subtitle={
+          <>
+            What a CEO needs to see this month. High-level by design. Pieces Inc · 142 employees.
+            <br />
+            A consultant&apos;s brief, auto-generated from organizational memory.
+          </>
+        }
         meta={
           <div>
             <div className="font-mono text-xs text-ink-400 uppercase tracking-wider">Generated · Apr 22</div>
