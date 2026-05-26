@@ -4,7 +4,7 @@ const team = [
   { initials: 'BP', name: 'Brian Powell', role: 'Engineer', project: 'Domain Capture', focus: '6.2h', kpi: 64, kpiTone: 'neutral' as const, status: 'Focused', statusTone: 'focused' as const, avatarTone: 'green' },
   { initials: 'MM', name: 'Mack Myers', role: 'Engineer', project: 'Copilot · Reports', focus: '5.4h', kpi: 71, kpiTone: 'neutral' as const, status: 'Focused', statusTone: 'focused' as const, avatarTone: 'violet' },
   { initials: 'MU', name: 'Musa Ahmed', role: 'Engineer', project: 'Server-side Pipelines', focus: '3.9h', kpi: 44, kpiTone: 'warn' as const, status: 'Fragmented', statusTone: 'fragmented' as const, avatarTone: 'orange' },
-  { initials: 'JK', name: 'Jordan Kim', role: 'Engineer · New hire', project: 'Reports onboarding', focus: '5.1h', kpi: 58, kpiTone: 'pos' as const, status: 'Ramping', statusTone: 'ramping' as const, avatarTone: 'blue' },
+  { initials: 'JK', name: 'Jordan Kim', role: 'Engineer', project: 'Reports onboarding', focus: '5.1h', kpi: 58, kpiTone: 'pos' as const, status: 'Healthy', statusTone: 'good' as const, avatarTone: 'blue' },
   { initials: 'GJ', name: 'Gavin Judd', role: 'Engineer', project: 'Analytics · Telemetry', focus: '5.8h', kpi: 81, kpiTone: 'neutral' as const, status: 'Focused', statusTone: 'focused' as const, avatarTone: 'lime' },
   { initials: 'SJ', name: 'Sam Jaffe', role: 'Engineer', project: 'Audit Logs', focus: '4.2h', kpi: 38, kpiTone: 'capacity' as const, status: 'Capacity', statusTone: 'capacity' as const, avatarTone: 'tan' },
 ];
@@ -22,9 +22,9 @@ const avatarColors: Record<string, string> = {
 
 const statusStyles: Record<string, string> = {
   focused: 'bg-accent-greenSoft text-accent-green',
+  good: 'bg-accent-greenSoft text-accent-green',
   fragmented: 'bg-accent-orangeSoft text-accent-orange',
   stretched: 'bg-accent-redSoft text-accent-red',
-  ramping: 'bg-accent-tealSoft text-accent-teal',
   capacity: 'bg-surface-100 text-ink-500',
 };
 

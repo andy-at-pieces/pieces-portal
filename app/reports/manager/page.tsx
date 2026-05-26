@@ -27,10 +27,9 @@ export default function ManagerReports() {
       />
 
       {/* Headline metrics */}
-      <div data-tour="manager-metrics" className="grid grid-cols-4 gap-3">
+      <div data-tour="manager-metrics" className="grid grid-cols-3 gap-3">
         <MetricCard label="Team Focus Avg" value="5.9" unit="h/day" delta="↑ 0.4h vs March" tone="pos" />
         <MetricCard label="Active Projects" value="7" delta="1 appears stalled" tone="warn" />
-        <MetricCard label="New-hire Ramp" value="18" unit="days" delta="↓ 7 days vs Q1 avg" tone="pos" />
         <AIUtilizationScoreCard
           total={teamAverage}
           caption={`Team avg ${formatScore(teamAverage, { decimals: 1 })}.`}

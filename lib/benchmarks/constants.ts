@@ -2,7 +2,6 @@ import { getAiToolPenetrationSummary } from '@/lib/benchmarks/aiToolPenetration'
 import { getContextResolutionSummary } from '@/lib/benchmarks/contextResolution';
 import { getCustomerQuarterlyReportPattern } from '@/lib/benchmarks/customerPatterns';
 import { getFocusBlockSummary } from '@/lib/benchmarks/focusBlocks';
-import { getNewHireContextVelocitySummary } from '@/lib/benchmarks/newHireVelocity';
 
 /** Shared org benchmark figures — hero, metric grid, and procurement narrative. */
 export const BENCHMARK_TENANT = 'pieces.app';
@@ -20,7 +19,6 @@ export type BenchmarkMetricCard = {
 const context = getContextResolutionSummary();
 const aiTools = getAiToolPenetrationSummary();
 const focus = getFocusBlockSummary();
-const newHires = getNewHireContextVelocitySummary();
 const quarterlyPattern = getCustomerQuarterlyReportPattern();
 
 export const BENCHMARK_METRIC_CARDS: BenchmarkMetricCard[] = [
@@ -46,23 +44,11 @@ export const BENCHMARK_METRIC_CARDS: BenchmarkMetricCard[] = [
     secondaryNote: `Week 12 vs Week 1 (${focus.week1AvgMinutes} → ${focus.week12AvgMinutes} min).`,
   },
   {
-    label: 'New-Hire Context Velocity',
-    value: String(newHires.week3PrimarySharePct),
-    suffix: '%',
-    note: `How quickly new hires concentrate on their primary project. Pattern observed across last ${newHires.hireCount} hires.`,
-  },
-  {
     label: 'Quarterly Report Pattern',
     value: quarterlyPattern.headline,
     suffix: '',
     note: quarterlyPattern.caption,
     variant: 'customer-pattern',
-  },
-  {
-    label: '',
-    value: '',
-    suffix: '',
-    note: '',
   },
 ];
 
@@ -74,5 +60,4 @@ export const DEFAULT_BENCHMARK_NARRATIVE_INPUT = {
   underusedAiToolCount: aiTools.underusedLicensedToolCount,
   focusBlockWeek1Minutes: focus.week1AvgMinutes,
   focusBlockWeek12Minutes: focus.week12AvgMinutes,
-  newHirePrimaryShareWeeks: newHires.weeksToPrimaryShare,
 } as const;

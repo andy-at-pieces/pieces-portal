@@ -28,11 +28,11 @@ const signals = [
     icon: TrendingDown,
     title: (
       <>
-        <strong className="font-semibold">Jordan Kim&apos;s</strong> ramp is ahead of schedule.
+        <strong className="font-semibold">Jordan Kim</strong> is picking up shared context quickly.
       </>
     ),
-    desc: 'Three weeks in. Already contributing across two projects at pace comparable to 8-week hires. Workstream Activity shows heavy use of shared context from Priya and Mark. The onboarding handoff is working.',
-    action: 'See ramp data',
+    desc: 'Contributing across two projects with heavy reuse of prior work from Priya and Mark. Workstream Activity shows fewer repeat context searches than the team average this month.',
+    action: 'View profile',
   },
 ];
 

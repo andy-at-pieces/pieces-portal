@@ -82,8 +82,7 @@ export default function BenchmarksPage() {
         Measured across the organization
       </SectionLabel>
       <div className="grid grid-cols-2 gap-3">
-        {BENCHMARK_METRIC_CARDS.map((b, idx) =>
-          b.label ? (
+        {BENCHMARK_METRIC_CARDS.map((b) => (
             <Card
               key={b.label}
               padding="lg"
@@ -120,10 +119,7 @@ export default function BenchmarksPage() {
                 <div className="text-[11px] text-ink-400 mt-2 leading-snug">{b.secondaryNote}</div>
               )}
             </Card>
-          ) : (
-            <div key={`bench-metric-spacer-${idx}`} aria-hidden />
-          )
-        )}
+        ))}
       </div>
 
       <WeekComparisonSection />
