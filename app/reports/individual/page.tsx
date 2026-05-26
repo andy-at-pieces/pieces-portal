@@ -1,4 +1,5 @@
 import { Card, MetricCard, PageHeader, SectionLabel } from '@/components/ui';
+import SOPSection from '@/components/reports/SOPSection';
 import StandupCard from '@/components/StandupCard';
 import TimeAllocation from '@/components/TimeAllocation';
 import { formatBreakdownCaption } from '@/lib/scores/aiUtilization';
@@ -47,6 +48,8 @@ export default function IndividualReports() {
       <Card padding="lg">
         <TimeAllocation />
       </Card>
+
+      <SOPSection />
     </div>
   );
 }
